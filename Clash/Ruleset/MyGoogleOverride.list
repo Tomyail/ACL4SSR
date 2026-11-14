@@ -1,0 +1,7 @@
+# 内容：个人覆盖 - dl.google.com 走「🔍 谷歌搜索」组（代理下载）
+# 说明：上游 UnBan.list / GoogleCN.list 里 dl.google.com 是直连，会被它们先命中。
+#      本文件在 ini 里排在它们之前，靠首条匹配优先来覆盖，从而不必修改上游维护的名单。
+# 维护：Tomyail 自有文件，上游 ACL4SSR 不会改动
+# 数量：2条
+DOMAIN-SUFFIX,dl.google.com
+DOMAIN-SUFFIX,dl.l.google.com
