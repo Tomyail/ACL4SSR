@@ -1,14 +1,18 @@
-# 内容：个人覆盖——Steam 网页/API 走代理
-# 数量：3条
-# 说明：以下三个域名在国内直连不通或间歇性超时（实测 store 3/3 失败、api 超时），需走代理：
-#         steamcommunity.com    社区主站
-#         store.steampowered.com 商店主站
-#         api.steampowered.com   客户端 API
+# 内容：个人覆盖——Steam 网页/API/图片走代理
+# 数量：4条
+# 说明：以下域名在国内直连不通或间歇性超时（实测），需走代理：
+#         steamcommunity.com               社区主站（直连超时）
+#         store.steampowered.com           商店主站（3/3 直连失败）
+#         api.steampowered.com             客户端 API（直连超时）
+#         shared.fastly.steamstatic.com    商店游戏封面图（SNI 被墙，TLS 握手被重置，171 张 jpg 全在此）
 #       以下域名直连正常，刻意不收（保持 🎮 游戏平台 的 DIRECT）：
-#         cdn.akamai.steamstatic.com / store.akamai.steamstatic.com  商店图片 CDN
-#         login.steampowered.com / checkout.steampowered.com         登录与结算
-#         steamcontent.com / steamusercontent.com                    游戏下载 CDN
+#         store.fastly.steamstatic.com     CSS/JS/加载动画，直连 0.25s
+#         cdn.fastly.steamstatic.com       商店大图，直连可用
+#         cdn.akamai.steamstatic.com       商店图片 CDN
+#         login.steampowered.com / checkout.steampowered.com   登录与结算
+#         steamcontent.com / steamusercontent.com              游戏下载 CDN
 #       注意：本文件必须排在 🎮 游戏平台 之前，否则被 Steam.list 的同名规则先接走。
 DOMAIN-SUFFIX,steamcommunity.com
 DOMAIN-SUFFIX,store.steampowered.com
 DOMAIN-SUFFIX,api.steampowered.com
+DOMAIN-SUFFIX,shared.fastly.steamstatic.com
