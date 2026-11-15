@@ -1,0 +1,7 @@
+# 内容：个人覆盖——Steam 社区主站走代理
+# 数量：1条
+# 说明：steamcommunity.com 在国内直连不通（实测超时），需走代理。
+#       静态资源 CDN（steamcommunity-a.akamaihd.net / steamuserimages-a.akamaihd.net）直连正常，刻意不收。
+#       商店 store.steampowered.com 直连可用，也刻意不收。
+#       本文件必须排在 🎮 游戏平台 之前，否则被 Steam.list 的 steamcommunity.com 规则先接走。
+DOMAIN-SUFFIX,steamcommunity.com
