@@ -1,6 +1,6 @@
 # 内容：国外媒体列表
-# 更新：2025-12-06 10:28:17
-# 数量：414条
+# 更新：2026-11-15 14:23:02
+# 数量：374条
 
 # ABC
 DOMAIN-SUFFIX,edgedatg.com
@@ -93,6 +93,9 @@ URL-REGEX,^https?:\/\/www\.amazon\.com\/(Amazon-Video|gp\/video)\/
 
 # AppleNews
 DOMAIN,gspe1-ssl.ls.apple.com
+
+# AppleSoftwareUpdate
+DOMAIN,updates.cdn-apple.com
 
 # AppleTV
 DOMAIN,np-edge.itunes.apple.com
@@ -433,6 +436,9 @@ DOMAIN-SUFFIX,ttvnw.net
 DOMAIN-SUFFIX,twitch-ext.rootonline.de
 DOMAIN-SUFFIX,twitch.tv
 DOMAIN-SUFFIX,twitchcdn.net
+
+# Twitter
+DOMAIN-SUFFIX,twimg.com
 
 # ViuTV
 PROCESS-NAME,com.viu.pad
