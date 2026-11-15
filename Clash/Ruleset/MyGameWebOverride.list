@@ -1,0 +1,51 @@
+# 内容：游戏网页/商店/API/图片 —— 走代理
+# 数量：42条
+# 说明：原则是「大流量直连，其余代理」。以下域名都是商店页面、账号 API、社区、图片 CDN 和
+#       启动器通信，单次请求体积小（Steam 商店整页静态资源仅 786 KB），走代理体验更好，
+#       且能绕开国内对这类站点的间歇性封锁。
+#       大流量下载/更新域名见 MyGameDirect.list，不得混入本文件。
+#       注意：playstation.net（下载）与 playstation.com（商店）是两套域名；
+#             nintendo.net（下载）与 nintendo.com（eShop）同理。
+#       unrealengine.com 不在此列：UE 编辑器下载是 GB 级，保留在 MyGameDirect.list。
+#       本文件必须排在 🎮 游戏平台 之前。
+DOMAIN-SUFFIX,steampowered.com
+DOMAIN-SUFFIX,steamstatic.com
+DOMAIN-SUFFIX,steamcommunity.com
+DOMAIN-SUFFIX,steam-chat.com
+DOMAIN-SUFFIX,steamgames.com
+DOMAIN-SUFFIX,steamserver.net
+DOMAIN-SUFFIX,steamstat.us
+DOMAIN-SUFFIX,valvesoftware.com
+DOMAIN,steambroadcast.akamaized.net
+DOMAIN,steamcommunity-a.akamaihd.net
+DOMAIN,steamstore-a.akamaihd.net
+DOMAIN,steamuserimages-a.akamaihd.net
+DOMAIN,steamusercontent-a.akamaihd.net
+DOMAIN-SUFFIX,epicgames.com
+DOMAIN-SUFFIX,epicgames.dev
+DOMAIN-SUFFIX,paragon.com
+DOMAIN-SUFFIX,playartifact.com
+DOMAIN-SUFFIX,underlords.com
+DOMAIN-SUFFIX,ea.com
+DOMAIN-SUFFIX,origin.com
+DOMAIN-SUFFIX,rtm.tnt-ea.com
+DOMAIN-SUFFIX,playstation.com
+DOMAIN-SUFFIX,sony.com
+DOMAIN-SUFFIX,sonyentertainmentnetwork.com
+DOMAIN-SUFFIX,nintendo.com
+DOMAIN-SUFFIX,nintendo-europe.com
+DOMAIN-SUFFIX,nintendo.be
+DOMAIN-SUFFIX,nintendo.co.jp
+DOMAIN-SUFFIX,nintendo.co.uk
+DOMAIN-SUFFIX,nintendo.com.au
+DOMAIN-SUFFIX,nintendo.de
+DOMAIN-SUFFIX,nintendo.es
+DOMAIN-SUFFIX,nintendo.eu
+DOMAIN-SUFFIX,nintendo.fr
+DOMAIN-SUFFIX,nintendo.it
+DOMAIN-SUFFIX,nintendo.jp
+DOMAIN-SUFFIX,nintendo.nl
+DOMAIN-SUFFIX,fanatical.com
+DOMAIN-SUFFIX,humblebundle.com
+DOMAIN-SUFFIX,helpshift.com
+DOMAIN,cloudsync-prod.s3.amazonaws.com

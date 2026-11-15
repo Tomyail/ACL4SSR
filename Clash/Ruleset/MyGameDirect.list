@@ -1,0 +1,18 @@
+# 内容：游戏下载/更新 CDN —— 必须直连
+# 数量：10条
+# 说明：这些域名承载游戏本体下载、补丁和资源 CDN，动辄数 GB，走代理会拖慢且浪费流量。
+#       本文件必须排在 MyGameWebOverride.list 和 🎮 游戏平台 之前：
+#       其中 cm.steampowered.com 是 Steam 客户端的下载服务器分配接口，
+#       若被 MyGameWebOverride.list 的 steampowered.com 后缀规则覆盖，
+#       客户端会被分配到美国 CDN，下载反而变慢。
+#       注：steamcontent.com / steamusercontent.com 已由 🎯 全球直连 的规则集覆盖，此处不重复。
+DOMAIN-SUFFIX,cm.steampowered.com
+DOMAIN-SUFFIX,playstation.net
+DOMAIN-SUFFIX,playstationnetwork.com
+DOMAIN-SUFFIX,nintendo.net
+DOMAIN-SUFFIX,nintendowifi.net
+DOMAIN-SUFFIX,steampipe.akamaized.net
+DOMAIN,origin-a.akamaihd.net
+DOMAIN,originasserts.akamaized.net
+DOMAIN,eaasserts-a.akamaihd.net
+DOMAIN-SUFFIX,unrealengine.com
