@@ -1,7 +1,14 @@
-# 内容：个人覆盖——Steam 社区主站走代理
-# 数量：1条
-# 说明：steamcommunity.com 在国内直连不通（实测超时），需走代理。
-#       静态资源 CDN（steamcommunity-a.akamaihd.net / steamuserimages-a.akamaihd.net）直连正常，刻意不收。
-#       商店 store.steampowered.com 直连可用，也刻意不收。
-#       本文件必须排在 🎮 游戏平台 之前，否则被 Steam.list 的 steamcommunity.com 规则先接走。
+# 内容：个人覆盖——Steam 网页/API 走代理
+# 数量：3条
+# 说明：以下三个域名在国内直连不通或间歇性超时（实测 store 3/3 失败、api 超时），需走代理：
+#         steamcommunity.com    社区主站
+#         store.steampowered.com 商店主站
+#         api.steampowered.com   客户端 API
+#       以下域名直连正常，刻意不收（保持 🎮 游戏平台 的 DIRECT）：
+#         cdn.akamai.steamstatic.com / store.akamai.steamstatic.com  商店图片 CDN
+#         login.steampowered.com / checkout.steampowered.com         登录与结算
+#         steamcontent.com / steamusercontent.com                    游戏下载 CDN
+#       注意：本文件必须排在 🎮 游戏平台 之前，否则被 Steam.list 的同名规则先接走。
 DOMAIN-SUFFIX,steamcommunity.com
+DOMAIN-SUFFIX,store.steampowered.com
+DOMAIN-SUFFIX,api.steampowered.com
