@@ -1,0 +1,10 @@
+# 内容：公共 DNS 解析器的字面 IP —— 统一走 🔒 DNS出口 分组
+# 数量：2条
+# 说明：与 dns.nameserver 的 `#🔒 DNS出口` 后缀保持同一个出口，
+#       这样设备自己发起的 DoT/DoH（不走路由器 DNS）也和路由器解析走同一个节点。
+# 注意：本文件必须排在 ⚡ 低延迟 / 内容类分组的 ruleset 之前，否则被先接走。
+#       改动这里等于改变 1.1.1.1 的出口节点，排查 DNS 问题时要先看这条。
+
+# Cloudflare DNS（DoT 853 / DoH 443）
+IP-CIDR,1.1.1.1/32,no-resolve
+IP-CIDR,1.0.0.1/32,no-resolve

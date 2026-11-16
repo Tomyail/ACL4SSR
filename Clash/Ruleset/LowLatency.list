@@ -1,10 +1,7 @@
 # 内容：高频小请求（控制面 / API / 元数据）——对延迟敏感、对带宽不敏感
-# 数量：6条
+# 数量：5条
 # 注意：本规则集必须排在内容类分组（国外媒体 / GithubContent / Docker / 电报消息）之前，
 #       否则同时命中的域名会被内容分组先接走，本组形同虚设。
-
-# Cloudflare DNS（DoH/DoT 直连目标，字面 IP，无需解析）
-IP-CIDR,1.1.1.1/32,no-resolve
 
 # Telegram 控制面（刻意不用 telegram.org，避免把媒体 CDN 大流量拖进来）
 DOMAIN-SUFFIX,api.telegram.org
