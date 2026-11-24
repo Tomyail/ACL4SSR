@@ -26,6 +26,10 @@ jobs:
       - name: Parse GFWList
         run: python scripts/gfwlist_parser.py
 
+      # 上游 v2fly 的 data/anthropic 更新频繁且不是 Clash 格式，这里每天拉一次并转换
+      - name: Sync Claude domains from v2fly
+        run: python scripts/sync_claude_domains.py
+
       - name: Download mihomo
         run: |
           MAX_RETRIES=5
