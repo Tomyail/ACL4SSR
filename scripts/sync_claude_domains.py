@@ -22,6 +22,8 @@ from pathlib import Path
 
 SRC_URL = "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/anthropic"
 OUT_FILE = Path(__file__).resolve().parent.parent / "Clash" / "Ruleset" / "ClaudeAI.list"
+# mihomo 的 rule-provider 镜像，两份要一起改，否则用 yaml 的人只剩旧的两条
+OUT_YAML = Path(__file__).resolve().parent.parent / "Clash" / "Providers" / "Ruleset" / "ClaudeAI.yaml"
 
 # 上游没有、但 Claude 登录鉴权实际会走的域名（只写 Anthropic 自己的 Auth0 租户，
 # 不写 auth0.com，避免把 OpenAI 等别的鉴权一起抢过来）
@@ -92,6 +94,15 @@ def render(rules: list[tuple[str, str]]) -> str:
     return "\n".join(lines) + "\n"
 
 
+def render_yaml(rules: list[tuple[str, str]]) -> str:
+    lines = ["payload:"]
+    for line in HEADER.format(count=len(rules), src=SRC_URL).splitlines():
+        lines.append(f"  {line}" if line.startswith("#") else line)
+    for kind, domain in rules:
+        lines.append(f"  - {kind},{domain}")
+    return "\n".join(lines) + "\n"
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true", help="只检查是否有变化")
@@ -105,19 +116,23 @@ def main() -> int:
 
     rules = upstream + [r for r in EXTRA_RULES if r not in upstream]
     new_text = render(rules)
+    new_yaml = render_yaml(rules)
     old_text = OUT_FILE.read_text(encoding="utf-8") if OUT_FILE.exists() else ""
+    old_yaml = OUT_YAML.read_text(encoding="utf-8") if OUT_YAML.exists() else ""
 
-    if new_text == old_text:
-        print(f"[ok] {OUT_FILE.name} 已是最新（{len(rules)} 条）")
+    if new_text == old_text and new_yaml == old_yaml:
+        print(f"[ok] {OUT_FILE.name} / {OUT_YAML.name} 已是最新（{len(rules)} 条）")
         return 0
 
     if args.check:
-        print(f"[diff] {OUT_FILE.name} 需要更新")
+        print(f"[diff] {OUT_FILE.name} 或 {OUT_YAML.name} 需要更新")
         return 1
 
     OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
     OUT_FILE.write_text(new_text, encoding="utf-8")
-    print(f"[ok] 已写入 {OUT_FILE} （{len(rules)} 条）")
+    OUT_YAML.parent.mkdir(parents=True, exist_ok=True)
+    OUT_YAML.write_text(new_yaml, encoding="utf-8")
+    print(f"[ok] 已写入 {OUT_FILE} 与 {OUT_YAML}（{len(rules)} 条）")
     return 0
 
 

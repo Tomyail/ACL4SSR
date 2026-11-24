@@ -1,5 +1,33 @@
 payload:
-  # 内容：Claude
-  # 数量：2条
-  - DOMAIN-SUFFIX,claude.ai
+  # 内容：Claude（Anthropic）
+  # 数量：22条
+  # 来源：https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/anthropic
+  #       （v2fly 的裸域名 = DOMAIN-SUFFIX，full: 前缀 = DOMAIN 精确匹配）
+  # 更新：本文件由 scripts/sync_claude_domains.py 生成，
+  #       .github/workflows/update.yml 每天自动同步一次，不需要手改。
+  #       上游这份 anthropic 数据更新比较频繁（跟着 Claude 发版节奏走，会陆续新增
+  #       claude.* 子站、CDN、遥测域名），所以刻意用自动同步而不是一次性抄写。
+  # 注意：本规则集必须排在 AI.list 之前，否则会被 AI.list 里的
+  #       DOMAIN-KEYWORD,claude / DOMAIN-KEYWORD,anthropic 先接走，单独分组形同虚设。
+  - DOMAIN-SUFFIX,ant.dev
   - DOMAIN-SUFFIX,anthropic.com
+  - DOMAIN-SUFFIX,anthropic.team
+  - DOMAIN-SUFFIX,antspace.dev
+  - DOMAIN-SUFFIX,chatbotclaude.com
+  - DOMAIN-SUFFIX,clau.de
+  - DOMAIN-SUFFIX,claude.ai
+  - DOMAIN-SUFFIX,claude.app
+  - DOMAIN-SUFFIX,claude.com
+  - DOMAIN-SUFFIX,claude.dev
+  - DOMAIN-SUFFIX,claude.new
+  - DOMAIN-SUFFIX,claude.site
+  - DOMAIN-SUFFIX,claudeacademy.com
+  - DOMAIN-SUFFIX,claudemcpclient.com
+  - DOMAIN-SUFFIX,claudemcpcontent.com
+  - DOMAIN-SUFFIX,claudepages.dev
+  - DOMAIN-SUFFIX,claudestudio.com
+  - DOMAIN-SUFFIX,claudeusercontent.com
+  - DOMAIN,servd-anthropic-website.b-cdn.net
+  - DOMAIN,http-intake.logs.us5.datadoghq.com
+  - DOMAIN,o1158394.ingest.us.sentry.io
+  - DOMAIN-SUFFIX,anthropic.auth0.com
