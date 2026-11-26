@@ -25,10 +25,43 @@ OUT_FILE = Path(__file__).resolve().parent.parent / "Clash" / "Ruleset" / "Claud
 # mihomo 的 rule-provider 镜像，两份要一起改，否则用 yaml 的人只剩旧的两条
 OUT_YAML = Path(__file__).resolve().parent.parent / "Clash" / "Providers" / "Ruleset" / "ClaudeAI.yaml"
 
-# 上游没有、但 Claude 登录鉴权实际会走的域名（只写 Anthropic 自己的 Auth0 租户，
-# 不写 auth0.com，避免把 OpenAI 等别的鉴权一起抢过来）
-EXTRA_RULES = [
+# 上游没有、但用 Claude 时会顺手请求的域名与 IP 段。这些漏掉时的症状是
+# 「登录/验证卡住、页面一直重试报错、订阅付款失败」，而 v2fly 的 anthropic 数据
+# 只收自家域名，不收这些第三方依赖，所以在这里补齐。
+# 每一项就是一条 Clash 规则行拆成的字段，第三项是可选的附加参数：
+# IP 段一律 no-resolve，避免匹配时本地做 DNS 解析。
+EXTRA_RULES: list[tuple[str, ...]] = [
+    # ---- 鉴权：只写 Anthropic 自己的 Auth0 租户，不写 auth0.com，
+    #      否则会把 OpenAI 等别的鉴权一起抢过来 ----
     ("DOMAIN-SUFFIX", "anthropic.auth0.com"),
+    # ---- 官网博客 / 官网 CDN ----
+    ("DOMAIN-SUFFIX", "anthropic-com.ghost.io"),
+    ("DOMAIN-SUFFIX", "anthropic.com.cdn.cloudflare.net"),
+    # ---- 客服与站内信（帮助中心、服务状态弹窗）----
+    ("DOMAIN-SUFFIX", "intercom.io"),
+    ("DOMAIN-SUFFIX", "intercomcdn.com"),
+    ("DOMAIN-SUFFIX", "intercomassets.com"),
+    ("DOMAIN-SUFFIX", "intercom-messenger.com"),
+    # ---- 前端监控 / 遥测（漏了不影响登录，但页面会一直重试报错）----
+    ("DOMAIN-SUFFIX", "us5.datadoghq.com"),
+    ("DOMAIN-SUFFIX", "browser-intake-us5-datadoghq.com"),
+    ("DOMAIN-SUFFIX", "us.sentry.io"),
+    ("DOMAIN-SUFFIX", "statsigapi.net"),
+    ("DOMAIN-SUFFIX", "usefathom.com"),
+    ("DOMAIN-SUFFIX", "siftscience.com"),
+    ("DOMAIN-SUFFIX", "fcmtoken.googleapis.com"),
+    # ---- 注册 / 人机验证（Cloudflare Turnstile、hCaptcha、Persona、Yoti）----
+    ("DOMAIN-SUFFIX", "hcaptcha.com"),
+    ("DOMAIN-SUFFIX", "challenges.cloudflare.com"),
+    ("DOMAIN-SUFFIX", "withpersona.com"),
+    ("DOMAIN-SUFFIX", "yoti.com"),
+    # ---- 支付：Claude Pro/Max 订阅页的 Stripe 前端 ----
+    ("DOMAIN-SUFFIX", "r.stripe.com"),
+    # ---- Anthropic 自有 IP 段：客户端走 IP 直连、没有 SNI 时靠这几条兜住 ----
+    ("IP-CIDR", "34.8.0.0/16", "no-resolve"),
+    ("IP-CIDR", "160.79.104.0/21", "no-resolve"),
+    ("IP-CIDR", "153.61.208.0/20", "no-resolve"),
+    ("IP-CIDR", "153.61.224.0/22", "no-resolve"),
 ]
 
 HEADER = """\
@@ -36,6 +69,8 @@ HEADER = """\
 # 数量：{count}条
 # 来源：{src}
 #       （v2fly 的裸域名 = DOMAIN-SUFFIX，full: 前缀 = DOMAIN 精确匹配）
+#       另有一批上游未收但用 Claude 必走的域名 / Anthropic IP 段（客服、人机验证、
+#       遥测、支付、自有 IP），写在 scripts/sync_claude_domains.py 的 EXTRA_RULES 里。
 # 更新：本文件由 scripts/sync_claude_domains.py 生成，
 #       .github/workflows/update.yml 每天自动同步一次，不需要手改。
 #       上游这份 anthropic 数据更新比较频繁（跟着 Claude 发版节奏走，会陆续新增
@@ -87,19 +122,24 @@ def parse_domain_list(text: str) -> list[tuple[str, str]]:
     return out
 
 
-def render(rules: list[tuple[str, str]]) -> str:
+def format_rule(rule: tuple[str, ...]) -> str:
+    """('IP-CIDR', '34.8.0.0/16', 'no-resolve') -> 'IP-CIDR,34.8.0.0/16,no-resolve'。"""
+    return ",".join(rule)
+
+
+def render(rules: list[tuple[str, ...]]) -> str:
     lines = [HEADER.format(count=len(rules), src=SRC_URL)]
-    for kind, domain in rules:
-        lines.append(f"{kind},{domain}")
+    for rule in rules:
+        lines.append(format_rule(rule))
     return "\n".join(lines) + "\n"
 
 
-def render_yaml(rules: list[tuple[str, str]]) -> str:
+def render_yaml(rules: list[tuple[str, ...]]) -> str:
     lines = ["payload:"]
     for line in HEADER.format(count=len(rules), src=SRC_URL).splitlines():
         lines.append(f"  {line}" if line.startswith("#") else line)
-    for kind, domain in rules:
-        lines.append(f"  - {kind},{domain}")
+    for rule in rules:
+        lines.append(f"  - {format_rule(rule)}")
     return "\n".join(lines) + "\n"
 
 

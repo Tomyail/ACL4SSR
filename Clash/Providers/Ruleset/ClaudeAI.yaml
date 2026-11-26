@@ -1,8 +1,10 @@
 payload:
   # 内容：Claude（Anthropic）
-  # 数量：22条
+  # 数量：44条
   # 来源：https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/anthropic
   #       （v2fly 的裸域名 = DOMAIN-SUFFIX，full: 前缀 = DOMAIN 精确匹配）
+  #       另有一批上游未收但用 Claude 必走的域名 / Anthropic IP 段（客服、人机验证、
+  #       遥测、支付、自有 IP），写在 scripts/sync_claude_domains.py 的 EXTRA_RULES 里。
   # 更新：本文件由 scripts/sync_claude_domains.py 生成，
   #       .github/workflows/update.yml 每天自动同步一次，不需要手改。
   #       上游这份 anthropic 数据更新比较频繁（跟着 Claude 发版节奏走，会陆续新增
@@ -31,3 +33,25 @@ payload:
   - DOMAIN,http-intake.logs.us5.datadoghq.com
   - DOMAIN,o1158394.ingest.us.sentry.io
   - DOMAIN-SUFFIX,anthropic.auth0.com
+  - DOMAIN-SUFFIX,anthropic-com.ghost.io
+  - DOMAIN-SUFFIX,anthropic.com.cdn.cloudflare.net
+  - DOMAIN-SUFFIX,intercom.io
+  - DOMAIN-SUFFIX,intercomcdn.com
+  - DOMAIN-SUFFIX,intercomassets.com
+  - DOMAIN-SUFFIX,intercom-messenger.com
+  - DOMAIN-SUFFIX,us5.datadoghq.com
+  - DOMAIN-SUFFIX,browser-intake-us5-datadoghq.com
+  - DOMAIN-SUFFIX,us.sentry.io
+  - DOMAIN-SUFFIX,statsigapi.net
+  - DOMAIN-SUFFIX,usefathom.com
+  - DOMAIN-SUFFIX,siftscience.com
+  - DOMAIN-SUFFIX,fcmtoken.googleapis.com
+  - DOMAIN-SUFFIX,hcaptcha.com
+  - DOMAIN-SUFFIX,challenges.cloudflare.com
+  - DOMAIN-SUFFIX,withpersona.com
+  - DOMAIN-SUFFIX,yoti.com
+  - DOMAIN-SUFFIX,r.stripe.com
+  - IP-CIDR,34.8.0.0/16,no-resolve
+  - IP-CIDR,160.79.104.0/21,no-resolve
+  - IP-CIDR,153.61.208.0/20,no-resolve
+  - IP-CIDR,153.61.224.0/22,no-resolve
